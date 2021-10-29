@@ -1,0 +1,62 @@
+﻿.logo img{
+    height:90px;
+    width:auto;
+    text-align:center;
+}
+
+.with-50{
+    width:50%;
+}
+.with-30{
+    width:30%;
+}
+.with-25{
+    width:25%;
+}
+
+/* Header style*/
+.header {
+    min-height:120px;
+    margin-bottom:15px;
+}
+
+.header .title{
+    text-align:left;
+    padding:25px 10px;
+}
+
+/* Menu style */
+.menu{
+    font-size:15px;
+    color:#000;
+}
+.menu a{
+    color :black;
+}
+.menu a:hover{
+    text-decoration:none;
+}
+
+/* Table style*/
+
+.list-blog .card{
+    border:0;
+}
+
+.list-blog .card .card-header{
+    background-color:white;
+    border:0;
+}
+
+.list-blog .card .card-body {
+    padding-left:0;
+    padding-right:20px;
+}
+
+.table-list-blog a {
+    color: #0366d6 !important;
+}
+.rowid {
+    max-width: 35px;
+    width: 20px;
+}

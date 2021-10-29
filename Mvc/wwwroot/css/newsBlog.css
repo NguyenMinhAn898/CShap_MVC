@@ -1,0 +1,23 @@
+﻿.edit-blog .card,
+.create-blog .card {
+    border: 0;
+}
+
+.edit-blog .card .card-header,
+.create-blog .card .card-header {
+    background-color: white;
+    border: 0;
+    padding: 0;
+}
+
+.edit-blog .card .card-body,
+.create-blog .card .card-body {
+    padding-left: 0;
+    padding-right: 20px;
+    width: 60%;
+}
+/* Style input image*/
+.input-img-create-blog input {
+    border: 0;
+    padding: 0;
+}
