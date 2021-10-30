@@ -4,20 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mvc.Data;
-using Mvc.Data.DAO;
-
 namespace Mvc.Controllers
 {
     public class BlogController : Controller
     {
-        private BlogDAO blogDAO = new BlogDAO();
         
         public IActionResult Index()
         {
-            blogDAO.iniiData();
-            List<BlogModel> listBlog = getListBlog();
-            ViewBag.listBlog = listBlog;
 
             return View();
         }
@@ -58,7 +51,7 @@ namespace Mvc.Controllers
         /// <returns></returns>
         private List<BlogModel> findAll()
         {
-            return blogDAO.findAll();   
+            return new List<BlogModel>();  
         }
 
         /// <summary>
@@ -68,7 +61,7 @@ namespace Mvc.Controllers
         /// <returns></returns>
         private List<BlogModel> findByTitle(String title)
         {
-            return blogDAO.findByTitle(title);
+            return new List<BlogModel>();
         }
     }
 }
