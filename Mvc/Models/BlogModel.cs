@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Mvc.Models
 {
-    public class Blog
+    public class BlogModel
     {
         public int Id { get; set; }
         public String Title { get; set; }
@@ -22,8 +22,8 @@ namespace Mvc.Models
         /// <summary>
         /// Contructor
         /// </summary>
-        public Blog() { }
-        public Blog(int id, String title, String description, String imgUrl,int category_id, bool is_active, String place,DateTime publicDate)
+        public BlogModel() { }
+        public BlogModel(int id, String title, String description, String imgUrl,int category_id, bool is_active, String place,DateTime publicDate)
         {
             Id = id;
             Title = title;

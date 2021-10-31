@@ -25,11 +25,7 @@ namespace Mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //MySql
-            services.AddTransient<DBConnect>(_ => new DBConnect());
-            services.Add(new ServiceDescriptor(typeof(MySqlConnect), new MySqlConnect(Configuration.GetConnectionString("DefaultConnection"))));
-
-            }
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

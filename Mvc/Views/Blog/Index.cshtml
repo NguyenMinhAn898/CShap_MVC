@@ -1,4 +1,5 @@
-﻿
+﻿@using Mvc.Models
+
 @{
     ViewData["Title"] = "List Blog";
 }
@@ -23,14 +24,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (BlogModel blog in ViewBag.listBlog)
+                        @foreach (BlogModel blog in ViewBag.listBlog)
                         {
                             <tr>
                                 <th scope="row">@blog.Id</th>
-                                <td>Mark</td>
+                                <td>@blog.Title</td>
                                 <td>Otto</td>
-                                <td>mdo</td>
-                                <th>1</th>
+                                @{
+                                    if (blog.Is_active)
+                                    {
+                                        <td>Yes</td>
+                                    }
+                                    else
+                                    {
+                                        <td>No</td>
+                                    }
+                                }
+                                <th>@blog.Place</th>
                                 <td>Mark</td>
                                 <td>
                                     <a class="link-primary"> <span>Edit</span></a>
@@ -39,7 +49,7 @@
                                     <button class="btn btn-outline-danger">Delete</button>
                                 </td>
                             </tr>
-                         }*@
+                         }
                     </tbody>
                 </table>
             </div>

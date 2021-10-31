@@ -14,6 +14,7 @@ namespace Mvc.Db
         private string password;
         private string database;
 
+        public MySqlConnection Connection { get => connection; }
 
         /// <summary>
         /// Constructor
@@ -30,7 +31,7 @@ namespace Mvc.Db
         {
             datasource = "127.0.0.1";
             username = "root";
-            password = "";
+            password = "root";
             database = "devfast_mvc";
 
             string connectionString = "datasource=" + datasource + ";" + "username=" + username + ";" + "password=" + password + ";" + "database=" + database + ";";
@@ -39,30 +40,10 @@ namespace Mvc.Db
         }
 
         /// <summary>
-        /// Test Connection to the Server
-        /// </summary>
-        private void DBConnection()
-        {
-            string ConnectionString = "datasource = localhost; username = root; password = ; database = devfast_mvc ";
-
-            MySqlConnection DBConnect = new MySqlConnection(ConnectionString);
-
-            try
-            {
-                DBConnect.Open();
-                //System.Windows.Forms.MessageBox.Show("Sucessfully connected!");
-            }
-            catch (Exception e)
-            {
-                //System.Windows.Forms.MessageBox.Show(e.Message);
-            }
-        }
-
-        /// <summary>
         /// Opens a MySQL-Connection
         /// </summary>
         /// <returns></returns>
-        private bool OpenConnection()
+        public bool OpenConnection()
         {
             try
             {
@@ -99,7 +80,7 @@ namespace Mvc.Db
         /// Close a MySQL-Connection
         /// </summary>
         /// <returns></returns>
-        private bool CloseConnection()
+        public bool CloseConnection()
         {
             try
             {

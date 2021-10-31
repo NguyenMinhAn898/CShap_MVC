@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mvc.Models;
+using Mvc.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 namespace Mvc.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
-        
         public IActionResult Index()
         {
-
+            List<BlogModel> blogs = findAll();
+            ViewBag.listBlog = blogs;
             return View();
         }
         public IActionResult Search()
@@ -28,30 +29,12 @@ namespace Mvc.Controllers
         }
 
         /// <summary>
-        /// Get list Blog by name
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        private List<Blog> getListBlog(String title = null)
-        {
-            
-            if(title == null)
-            {
-                return findAll();
-            }
-            else
-            {
-                return findByTitle(title);
-            }
-        }
-
-        /// <summary>
         /// Find All Blog
         /// </summary>
         /// <returns></returns>
-        private List<Blog> findAll()
+        private List<BlogModel> findAll()
         {
-            return new List<Blog>();  
+            return blogService.findAll() != null ? blogService.findAll() : new List<BlogModel>();
         }
 
         /// <summary>
@@ -59,9 +42,9 @@ namespace Mvc.Controllers
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        private List<Blog> findByTitle(String title)
+        private List<BlogModel> findByTitle(String title)
         {
-            return new List<Blog>();
+            return new List<BlogModel>();
         }
     }
 }

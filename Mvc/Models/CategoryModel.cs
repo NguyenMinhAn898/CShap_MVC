@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Mvc.Models
 {
-    public class Category
+    public class CategoryModel
     {
-        private MySqlConnect connect;
         public int Id { get; set; }
         public String Name { get; set; }
-        public bool is_active { get; set; }
-        public DateTime updated_at { get; set; }
-        public DateTime created_at { get; set; }
+        public bool Is_active { get; set; }
+        public DateTime? Updated_at { get; set; }
+        public DateTime? Created_at { get; set; }
     }
 }
