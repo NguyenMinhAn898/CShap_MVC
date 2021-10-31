@@ -34,7 +34,7 @@ namespace Mvc.Controllers
         /// <returns></returns>
         private List<BlogModel> findAll()
         {
-            return blogService.findAll() != null ? blogService.findAll() : new List<BlogModel>();
+            return blogService.findAll();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Mvc.Controllers
         /// <returns></returns>
         private List<BlogModel> findByTitle(String title)
         {
-            return new List<BlogModel>();
+            return blogService.findByTile(title);
         }
     }
 }
