@@ -32,7 +32,7 @@ namespace Mvc.Controllers
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        private List<BlogModel> getListBlog(String title = null)
+        private List<Blog> getListBlog(String title = null)
         {
             
             if(title == null)
@@ -49,9 +49,9 @@ namespace Mvc.Controllers
         /// Find All Blog
         /// </summary>
         /// <returns></returns>
-        private List<BlogModel> findAll()
+        private List<Blog> findAll()
         {
-            return new List<BlogModel>();  
+            return new List<Blog>();  
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace Mvc.Controllers
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        private List<BlogModel> findByTitle(String title)
+        private List<Blog> findByTitle(String title)
         {
-            return new List<BlogModel>();
+            return new List<Blog>();
         }
     }
 }
