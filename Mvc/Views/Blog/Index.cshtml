@@ -43,10 +43,10 @@
                                 <th>@blog.Place</th>
                                 <td>Mark</td>
                                 <td>
-                                    <a class="link-primary"> <span>Edit</span></a>
+                                    <a class="link-primary" href='@Url.Action("Edit","Blog")?id=@blog.Id'> <span>Edit</span></a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-danger">Delete</button>
+                                    <button class="btn btn-outline-danger" onclick='deleteBlog(@blog.Id)'>Delete</button>
                                 </td>
                             </tr>
                          }

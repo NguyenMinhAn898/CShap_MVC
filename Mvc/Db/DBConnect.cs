@@ -50,28 +50,8 @@ namespace Mvc.Db
                 connection.Open();
                 return true;
             }
-            catch (MySqlException ex)
+            catch
             {
-                //Most common error numbers
-                //0: cannot connect to the server
-                //1045: invalid username and/or password
-
-                switch (ex.Number)
-                {
-                    case 0:
-                        //System.Windows.Forms.MessageBox.Show("Cannot connect to server. Contact the administrator");
-                        break;
-
-                    case 1045:
-                        //System.Windows.Forms.MessageBox.Show("Invalid username/password! Please try again");
-                        break;
-                }
-
-                if (ex.Number != 0 || ex.Number != 1045)
-                {
-                    //System.Windows.Forms.MessageBox.Show(ex.Message);
-                }
-
                 return false;
             }
         }
@@ -87,9 +67,8 @@ namespace Mvc.Db
                 connection.Close();
                 return true;
             }
-            catch (MySqlException ex)
+            catch 
             {
-                //System.Windows.Forms.MessageBox.Show(ex.Message);
                 return false;
             }
         }

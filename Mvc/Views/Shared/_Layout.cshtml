@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/css/searchBlog.css" />
     <link rel="stylesheet" href="~/css/newsBlog.css" />
+
+
 </head>
 <body>
     <div class="container-fluid px-5">
@@ -32,10 +34,16 @@
 
         @{ Html.RenderPartial("_Footer");}
     </div>
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- CDN sweet alert 2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/main.js" ></script>
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

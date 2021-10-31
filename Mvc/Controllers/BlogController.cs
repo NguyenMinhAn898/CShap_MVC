@@ -23,8 +23,9 @@ namespace Mvc.Controllers
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
+            Console.WriteLine(id);
             return View();
         }
 
@@ -47,9 +48,10 @@ namespace Mvc.Controllers
             return blogService.findByTile(title);
         }
 
-        public bool deleteBlogById(int Id)
+        [HttpDelete]
+        public ActionResult deleteBlogById([FromBody] BlogModel input)
         {
-            return false;
+            return Json(data:false);
         }
     }
 }
