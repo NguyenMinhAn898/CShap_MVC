@@ -1,33 +1,35 @@
-﻿@{
+﻿@using Mvc.Models
+
+@{
     ViewData["Title"] = "Edit Blog";
 }
 
 <div class="edit-blog">
     <div class="card px-1">
         <div class="card-header py-0">
-            <h4>New Blogs</h4>
+            <h4>Edit Blogs</h4>
         </div>
-        <div class="card-body p-2 with-50" >
+        <div class="card-body p-2 with-50">
             <form>
                 <div class="row align-items-center">
                     <div class="col-12 m-1">
                         <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                        <input type="password" id="inputNewTitleBlog" class="form-control ">
+                        <input type="text" id="inputEditTitleBlog" class="form-control" value="@ViewBag.blog.Title ">
                     </div>
 
                     <div class="col-12 m-1">
                         <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                        <input type="password" id="inputShortDescTitleBlog" class="form-control">
+                        <input type="text" id="inputEditShortDescTitleBlog" class="form-control" value="@ViewBag.blog.Short_Description">
                     </div>
 
                     <div class="col-12 m-1">
                         <label for="inputDescTitleBlog" class="col-form-label">Chi tiết</label>
-                        <textarea class="form-control" rows="5" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <textarea class="form-control" rows="5" id="floatingTextarea2" >@ViewBag.blog.Description</textarea>
                     </div>
 
                     <div class="col-md-12 m-1 input-img-create-blog">
                         <label for="formFile" class="col-form-label">Hình ảnh</label>
-                        <input class="form-control " id="formFile" type="file">
+                        <input class="form-control " id="formEditFile" type="file">
                     </div>
 
                     <div class="col-md-12 m-1">
@@ -90,15 +92,14 @@
                     </div>
                     <div class="col-12 m-1">
                         <label for="inputNewTitleBlog" class="col-form-label">Date public</label>
-                        <input type="date" id="inputNewTitleBlog" class="form-control with-30" placeholder="mm/dd/yyyy">
+                        <input type="date" id="inputEditTitleBlog" class="form-control with-30" placeholder="mm/dd/yyyy">
                     </div>
 
                     <div class="col-12 pt-3 text-center">
-                        <button class="btn btn-success">Submit</button>
-                        <button class="btn btn-primary"> Clear</button>
+                        <button class="btn btn-success" type="submit">Submit</button>
+                        <button class="btn btn-primary" onclick="editClear()"> Clear</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

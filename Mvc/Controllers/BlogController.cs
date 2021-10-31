@@ -15,8 +15,9 @@ namespace Mvc.Controllers
             ViewBag.listBlog = blogs;
             return View();
         }
-        public IActionResult Search()
+        public IActionResult Search(String search)
         {
+            ViewBag.listSearchBlog = findByTitle(search);
             return View();
         }
         public IActionResult Create()
@@ -25,7 +26,7 @@ namespace Mvc.Controllers
         }
         public IActionResult Edit(int id)
         {
-            Console.WriteLine(id);
+            ViewBag.blog = findById(id);
             return View();
         }
 
@@ -48,6 +49,17 @@ namespace Mvc.Controllers
             return blogService.findByTile(title);
         }
 
+        private BlogModel findById(int id=0)
+        {
+            if (id <= 0)
+                return new BlogModel();
+            return blogService.findById(id);
+        }
+        /// <summary>
+        /// Delete row by id
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpDelete]
         public ActionResult deleteBlogById([FromBody] BlogModel input)
         {

@@ -92,6 +92,44 @@ namespace Mvc.Service
         }
 
         /// <summary>
+        /// Get blog by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public BlogModel findById(int id)
+        {
+            BlogModel blog = new BlogModel();
+            try
+            {
+                cnn.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand("select * from blog where id = " + id + " and is_active = true", cnn.Connection);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        blog.Id = Convert.ToInt32(reader["id"]);
+                        blog.Title = reader["title"].ToString();
+                        blog.Short_Description = reader["short_description"].ToString();
+                        blog.Description = reader["description"].ToString();
+                        blog.Place = reader["place"].ToString();
+                        blog.Is_active = Convert.ToBoolean(reader["is_active"]);
+                    }
+                    reader.Close();
+                }
+                return blog;
+            }
+            catch
+            {
+                return blog;
+            }
+            finally
+            {
+                cnn.CloseConnection();
+            }
+        }
+
+        /// <summary>
         /// Delete row by id
         /// Xóa mềm 
         /// </summary>
