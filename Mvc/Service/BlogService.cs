@@ -61,7 +61,7 @@ namespace Mvc.Service
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("select * from blog where title like %" + title + "% is_active = true", cnn.Connection);
+                MySqlCommand cmd = new MySqlCommand("select * from blog where title like %" + title + "% and is_active = true", cnn.Connection);
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -84,6 +84,32 @@ namespace Mvc.Service
             catch
             {
                 return list;
+            }
+            finally
+            {
+                cnn.CloseConnection();
+            }
+        }
+
+        /// <summary>
+        /// Delete row by id
+        /// Xóa mềm 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool deletById(int id)
+        {
+            try
+            {
+                cnn.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand("update blog set is_active = false where id ="+id+" and is_active = true", cnn.Connection);
+                cmd.ExecuteReader();
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
             finally
             {

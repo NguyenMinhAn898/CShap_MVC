@@ -46,5 +46,10 @@ namespace Mvc.Controllers
         {
             return blogService.findByTile(title);
         }
+
+        public bool deleteBlogById(int Id)
+        {
+            return false;
+        }
     }
 }
