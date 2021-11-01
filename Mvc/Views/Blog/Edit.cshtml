@@ -10,97 +10,106 @@
             <h4>Edit Blogs</h4>
         </div>
         <div class="card-body p-2 with-50">
-            <form>
-                <div class="row align-items-center">
-                    <div class="col-12 m-1">
-                        <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                        <input type="text" id="inputEditTitleBlog" class="form-control" value="@ViewBag.blog.Title ">
+            @{ if (ViewBag.blog == null)
+                {
+                    <div class="row text-center">
+                        <h3 class="mx-3">Không tồn tại dữ liệu</h3>
                     </div>
+                }
+                else
+                {
+                    <form>
+                        <div class="row align-items-center">
+                            <div class="col-12 m-1">
+                                <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
+                                <input type="text" id="inputEditTitleBlog" class="form-control" value="@ViewBag.blog.Title ">
+                            </div>
 
-                    <div class="col-12 m-1">
-                        <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                        <input type="text" id="inputEditShortDescTitleBlog" class="form-control" value="@ViewBag.blog.Short_Description">
-                    </div>
+                            <div class="col-12 m-1">
+                                <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
+                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" value="@ViewBag.blog.Short_Description">
+                            </div>
 
-                    <div class="col-12 m-1">
-                        <label for="inputDescTitleBlog" class="col-form-label">Chi tiết</label>
-                        <textarea class="form-control" rows="5" id="floatingTextarea2" >@ViewBag.blog.Description</textarea>
-                    </div>
+                            <div class="col-12 m-1">
+                                <label for="inputEditDescTitleBlog" class="col-form-label">Chi tiết</label>
+                                <textarea class="form-control" rows="7" id="inputEditDescTitleBlog">@ViewBag.blog.Description</textarea>
+                            </div>
 
-                    <div class="col-md-12 m-1 input-img-create-blog">
-                        <label for="formFile" class="col-form-label">Hình ảnh</label>
-                        <input class="form-control " id="formEditFile" type="file">
-                    </div>
+                            <div class="col-md-12 m-1 input-img-create-blog">
+                                <label for="inputEditFile" class="col-form-label">Hình ảnh</label>
+                                <input class="form-control " id="inputEditFile" type="file">
+                            </div>
 
-                    <div class="col-md-12 m-1">
-                        <label for="inputState" class="col-form-label">Loại</label>
-                        <select id="inputState" class="form-control with-25">
-                            <option selected>Thời sự</option>
-                            <option>Thế giới</option>
-                            <option>Kinh doanh</option>
-                            <option>Giải trí</option>
-                            <option>Thể thao</option>
-                            <option>Pháp luật</option>
-                        </select>
-                    </div>
+                            <div class="col-md-12 m-1">
+                                <label for="inputEditCategory" class="col-form-label">Loại</label>
+                                <select id="inputEditCategory" class="form-control with-25">
+                                    <option selected value="1">Thời sự</option>
+                                    <option>Thế giới</option>
+                                    <option>Kinh doanh</option>
+                                    <option>Giải trí</option>
+                                    <option>Thể thao</option>
+                                    <option>Pháp luật</option>
+                                </select>
+                            </div>
 
-                    <div class="col-md-12 m-1">
-                        <div class="col-md-12">
-                            <label class="col-form-label">Vị trí</label>
+                            <div class="col-md-12 m-1">
+                                <div class="col-md-12">
+                                    <label class="col-form-label">Vị trí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="placeEditVietName" checked>
+                                    <label class="form-check-label" for="placeEditVietName">
+                                        Việt Nam
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="placeEditAsian">
+                                    <label class="form-check-label" for="placeEditAsian">
+                                        Châu Á
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="placeEditEuro">
+                                    <label class="form-check-label" for="placeEditEuro">
+                                        Châu Âu
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="placeEditAmerica">
+                                    <label class="form-check-label" for="placeEditAmerica">
+                                        Châu Mỹ
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 m-1">
+                                <div>
+                                    <label class="col-form-label"> Public</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioEidtPublic" id="radioEidtPublicYes">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioEidtPublic" id="radioEidtPublicNo" checked>
+                                    <label class="form-check-label" for="radioEidtPublicNo">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 m-1">
+                                <label for="inputEditPublicDate" class="col-form-label">Date public</label>
+                                <input type="date" id="inputEditPublicDate" class="form-control with-30" placeholder="mm/dd/yyyy">
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeVietName" checked>
-                            <label class="form-check-label" for="placeVietName">
-                                Việt Nam
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeAsian">
-                            <label class="form-check-label" for="placeAsian">
-                                Châu Á
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeEuro">
-                            <label class="form-check-label" for="placeEuro">
-                                Châu Âu
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeAmerica">
-                            <label class="form-check-label" for="placeAmerica">
-                                Châu Mỹ
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12 m-1">
-                        <div>
-                            <label class="col-form-label"> Public</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Yes
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                No
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12 m-1">
-                        <label for="inputNewTitleBlog" class="col-form-label">Date public</label>
-                        <input type="date" id="inputEditTitleBlog" class="form-control with-30" placeholder="mm/dd/yyyy">
-                    </div>
-
+                    </form>
                     <div class="col-12 pt-3 text-center">
-                        <button class="btn btn-success" type="submit">Submit</button>
-                        <button class="btn btn-primary" onclick="editClear()"> Clear</button>
+                        <button class="btn btn-success c" type="submit">Submit</button>
+                        <button class="btn btn-primary"  onclick="editClear()"> Clear</button>
                     </div>
-                </div>
-            </form>
+                }
+            }
         </div>
     </div>
 </div>

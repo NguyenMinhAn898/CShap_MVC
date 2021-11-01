@@ -7,32 +7,32 @@
         <div class="card-header py-0">
             <h4>New Blogs</h4>
         </div>
-        <div class="card-body p-2 with-50" >
+        <div class="card-body p-2 with-50">
             <form>
                 <div class="row align-items-center">
                     <div class="col-12 m-1">
                         <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                        <input type="password" id="inputNewTitleBlog" class="form-control ">
+                        <input type="text" id="inputNewTitleBlog" class="form-control ">
                     </div>
 
                     <div class="col-12 m-1">
-                        <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                        <input type="password" id="inputShortDescTitleBlog" class="form-control">
+                        <label for="inputNewShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
+                        <input type="text" id="inputNewShortDescTitleBlog" class="form-control">
                     </div>
 
                     <div class="col-12 m-1">
-                        <label for="inputDescTitleBlog" class="col-form-label">Chi tiết</label>
-                        <textarea class="form-control" rows="7" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="inputNewDescTitleBlog" class="col-form-label">Chi tiết</label>
+                        <textarea class="form-control" rows="7" id="inputNewDescTitleBlog"></textarea>
                     </div>
 
                     <div class="col-md-12 m-1 input-img-create-blog">
-                        <label for="formFile" class="col-form-label">Hình ảnh</label>
-                        <input class="form-control " id="formFile" type="file">
+                        <label for="inputNewFile" class="col-form-label">Hình ảnh</label>
+                        <input class="form-control " id="inputNewFile" type="file">
                     </div>
 
                     <div class="col-md-12 m-1">
-                        <label for="inputState" class="col-form-label">Loại</label>
-                        <select id="inputState" class="form-control with-25">
+                        <label for="inputNewCategory" class="col-form-label">Loại</label>
+                        <select id="inputNewCategory" class="form-control with-25">
                             <option selected>Thời sự</option>
                             <option>Thế giới</option>
                             <option>Kinh doanh</option>
@@ -47,26 +47,26 @@
                             <label class="col-form-label">Vị trí</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeVietName" checked>
-                            <label class="form-check-label" for="placeVietName">
+                            <input class="form-check-input" type="checkbox" value="" id="placeNewVietName" checked>
+                            <label class="form-check-label" for="placeNewVietName">
                                 Việt Nam
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeAsian" >
-                            <label class="form-check-label" for="placeAsian">
+                            <input class="form-check-input" type="checkbox" value="" id="placeNewAsian">
+                            <label class="form-check-label" for="placeNewAsian">
                                 Châu Á
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeEuro" >
-                            <label class="form-check-label" for="placeEuro">
+                            <input class="form-check-input" type="checkbox" value="" id="placeNewEuro">
+                            <label class="form-check-label" for="placeNewEuro">
                                 Châu Âu
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="placeAmerica" >
-                            <label class="form-check-label" for="placeAmerica">
+                            <input class="form-check-input" type="checkbox" value="" id="placeNewAmerica">
+                            <label class="form-check-label" for="placeNewAmerica">
                                 Châu Mỹ
                             </label>
                         </div>
@@ -76,30 +76,30 @@
                             <label class="col-form-label"> Public</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
+                            <input class="form-check-input" type="radio" name="radioNewPublic" id="radioNewPublicNo">
+                            <label class="form-check-label" for="radioNewPublicNo">
                                 Yes
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
+                            <input class="form-check-input" type="radio" name="radioNewPublic" id="radioNewPublicYes" checked>
+                            <label class="form-check-label" for="radioNewPublicYes">
                                 No
                             </label>
                         </div>
                     </div>
                     <div class="col-12 m-1">
-                        <label for="inputNewTitleBlog" class="col-form-label">Date public</label>
-                        <input type="date" id="inputNewTitleBlog" class="form-control with-30" placeholder="mm/dd/yyyy">
+                        <label for="inputEditPublicDate" class="col-form-label">Date public</label>
+                        <input type="date" id="inputEditPublicDate" class="form-control with-30" placeholder="mm/dd/yyyy">
                     </div>
 
-                    <div class="col-12 pt-3 text-center">
-                        <button class="btn btn-success">Submit</button>
-                        <button class="btn btn-primary"> Clear</button>
-                    </div>
+
                 </div>
-
             </form>
+            <div class="col-12 pt-3 text-center">
+                <button class="btn btn-success">Submit</button>
+                <button class="btn btn-primary" onclick="newClear()"> Clear</button>
+            </div>
         </div>
     </div>
 </div>

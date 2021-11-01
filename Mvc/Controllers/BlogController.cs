@@ -52,8 +52,11 @@ namespace Mvc.Controllers
         private BlogModel findById(int id=0)
         {
             if (id <= 0)
-                return new BlogModel();
-            return blogService.findById(id);
+                return null;
+            BlogModel output = blogService.findById(id);
+            if (output.Title == null)
+                return null;
+            return output;
         }
         /// <summary>
         /// Delete row by id
