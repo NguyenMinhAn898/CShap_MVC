@@ -1,4 +1,8 @@
 ﻿
+/**
+ *  Delete blog by id
+ * @param {any} id
+ */
 function deleteBlog(id) {
     Swal.fire({
         title: 'Are you sure?',

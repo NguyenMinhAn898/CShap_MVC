@@ -10,6 +10,47 @@ namespace Mvc.Service
     public class BlogService:BaseService
     {
         public BlogService() { }
+
+        /// <summary>
+        /// Insert Blog
+        /// </summary>
+        /// <param name="blog"></param>
+        /// <returns></returns>
+        public String insertBlog(BlogModel blog)
+        {
+            string result = "";
+            try
+            {
+                cnn.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO blog" +
+                    "(id, title, short_description, description, img_url, category_id, place, public_date, status, is_active, updated_at, created_at) " +
+                    "VALUES (NULL,@title,@short_description, @description, @img_url, @category_id, @place, @public_date, @status, @is_active, @updated_at, @created_at)", cnn.Connection);
+                cmd.Parameters.AddWithValue("@title", blog.Title);
+                cmd.Parameters.AddWithValue("@short_description", blog.Short_Description);
+                cmd.Parameters.AddWithValue("@description", blog.Description);
+                cmd.Parameters.AddWithValue("@img_url", blog.ImageUrl);
+                cmd.Parameters.AddWithValue("@category_id", blog.Category_Id);
+                cmd.Parameters.AddWithValue("@place", blog.Place);
+                cmd.Parameters.AddWithValue("@public_date", blog.Public_Date);
+                cmd.Parameters.AddWithValue("@status", blog.Status);
+                cmd.Parameters.AddWithValue("@is_active", true);
+                cmd.Parameters.AddWithValue("@updated_at", DateTime.Now);
+                cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
+
+                result = cmd.ExecuteScalar().ToString();
+
+                return result;
+            }
+            catch
+            {
+                return result;
+            }
+            finally
+            {
+                cnn.CloseConnection();
+            }
+        }
+
         /// <summary>
         /// Get all blog
         /// </summary>

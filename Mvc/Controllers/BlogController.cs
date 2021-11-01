@@ -20,7 +20,7 @@ namespace Mvc.Controllers
             ViewBag.listSearchBlog = findByTitle(search);
             return View();
         }
-        public IActionResult Create()
+        public IActionResult Create(BlogModel input)
         {
             return View();
         }
@@ -62,8 +62,8 @@ namespace Mvc.Controllers
         /// <returns></returns>
         [HttpDelete]
         public ActionResult deleteBlogById([FromBody] BlogModel input)
-        {
-            return Json(data:false);
+        {             
+            return blogService.deletById(input.Id) ? Json(data: true) : Json(data: false); ;
         }
     }
 }

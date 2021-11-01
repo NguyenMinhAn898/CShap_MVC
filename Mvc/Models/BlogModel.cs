@@ -14,10 +14,11 @@ namespace Mvc.Models
         public String ImageUrl { get; set; }
         public String Place { get; set; }
         public int Category_Id { get; set; }
-        public DateTime PublicDate { get; set; }
+        public DateTime? Public_Date { get; set; }
+        public bool Status { get; set; }
         public bool Is_active { get; set; }
-        public DateTime Updated_at { get; set; }
-        public DateTime Created_at { get; set; }
+        public DateTime? Updated_at { get; set; }
+        public DateTime? Created_at { get; set; }
 
         /// <summary>
         /// Contructor
@@ -32,7 +33,7 @@ namespace Mvc.Models
             Category_Id = category_id;
             Is_active = is_active;
             Place = place;
-            PublicDate = publicDate;
+            Public_Date = publicDate;
         }
     }
 }
