@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -56,27 +57,28 @@ namespace Mvc.Service
         /// <returns></returns>
         public List<BlogModel> findAll()
         {
+            DataTable dt = new DataTable();
             List<BlogModel> list = new List<BlogModel>();
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("select * from blog where is_active = true", cnn.Connection);
+                MySqlCommand cmd = new MySqlCommand("GetAllBlogs", cnn.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                using (var reader = cmd.ExecuteReader())
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                foreach(DataRow dr in dt.Rows)
                 {
-                    while (reader.Read())
-                    {
-                        BlogModel blog = new BlogModel();
-                        blog.Id = Convert.ToInt32(reader["id"]);
-                        blog.Title = reader["title"].ToString();
-                        blog.Short_Description = reader["short_description"].ToString();
-                        blog.Description = reader["description"].ToString();
-                        blog.Place = reader["place"].ToString();
-                        blog.Is_active = Convert.ToBoolean(reader["is_active"]);
+                    BlogModel blog = new BlogModel();
+                    blog.Id = Convert.ToInt32(dr["id"]);
+                    blog.Title = dr["title"].ToString();
+                    blog.Short_Description = dr["short_description"].ToString();
+                    blog.Description = dr["description"].ToString();
+                    blog.Place = dr["place"].ToString();
+                    blog.Is_active = Convert.ToBoolean(dr["is_active"]);
 
-                        list.Add(blog);
-                    }
-                    reader.Close();
+                    list.Add(blog);
                 }
                 return list;
             }
