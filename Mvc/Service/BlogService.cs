@@ -149,11 +149,14 @@ namespace Mvc.Service
                     while (reader.Read())
                     {
                         blog.Id = Convert.ToInt32(reader["id"]);
+                        blog.Category_Id = Convert.ToInt32(reader["category_id"]);
                         blog.Title = reader["title"].ToString();
                         blog.Short_Description = reader["short_description"].ToString();
                         blog.Description = reader["description"].ToString();
                         blog.Place = reader["place"].ToString();
+                        blog.Status = Convert.ToBoolean(reader["Status"]);
                         blog.Is_active = Convert.ToBoolean(reader["is_active"]);
+                        blog.Public_Date = !String.IsNullOrEmpty(reader["public_date"].ToString()) ? Convert.ToDateTime(reader["public_date"]) : null;
                     }
                     reader.Close();
                 }
@@ -187,6 +190,40 @@ namespace Mvc.Service
             }
             catch
             {
+                return false;
+            }
+            finally
+            {
+                cnn.CloseConnection();
+            }
+        }
+
+        public bool update(BlogModel blog)
+        {
+            try
+            {
+                cnn.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand("Update blog Set title=@title, short_description=@short_description," +
+                    " description=@description, img_url=@img_url, category_id=@category_id, place=@place, public_date=@public_date," +
+                    " status=@status where id =@id and is_active = true", cnn.Connection);
+
+                cmd.Parameters.AddWithValue("@title", blog.Title);
+                cmd.Parameters.AddWithValue("@short_description", blog.Short_Description);
+                cmd.Parameters.AddWithValue("@description", blog.Description);
+                cmd.Parameters.AddWithValue("@img_url", blog.ImageUrl);
+                cmd.Parameters.AddWithValue("@category_id", blog.Category_Id);
+                cmd.Parameters.AddWithValue("@place", blog.Place);
+                cmd.Parameters.AddWithValue("@public_date", blog.Public_Date);
+                cmd.Parameters.AddWithValue("@status", blog.Status);
+                cmd.Parameters.AddWithValue("@id", blog.Id);
+
+                cmd.ExecuteReader();
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                e.ToString();
                 return false;
             }
             finally

@@ -31,9 +31,7 @@ function deleteBlog(id) {
                             timer: 1500
                         }).then(() => {
                             location.reload(true);
-
                         })
-
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -44,8 +42,7 @@ function deleteBlog(id) {
                         )
                     }
                 }
-            });
-            
+            });            
         }
     })
 }

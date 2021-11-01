@@ -62,6 +62,7 @@ namespace Mvc.Controllers
         public IActionResult Edit(int id)
         {
             ViewBag.blog = findById(id);
+            ViewBag.listCategory = getListCategory();
             return View();
         }
 
@@ -107,6 +108,13 @@ namespace Mvc.Controllers
         public List<CategoryModel> getListCategory()
         {
             return categoryService.findAll();
+        }
+
+        [HttpPost]
+        public bool updateBlog(BlogModel blog)
+        {
+
+            return blogService.update(blog);
         }
     }
 }

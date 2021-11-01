@@ -18,37 +18,48 @@
                 }
                 else
                 {
-                    <form>
+                    <form method="post" action="/blog/updateBlog">
+                        <input type="hidden" id="inputEditIdBlog" name="Id" value="@ViewBag.blog.Id"/>
                         <div class="row align-items-center">
                             <div class="col-12 m-1">
                                 <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                                <input type="text" id="inputEditTitleBlog" class="form-control" value="@ViewBag.blog.Title ">
+                                <input type="text" id="inputEditTitleBlog" class="form-control" name="Title" value="@ViewBag.blog.Title ">
                             </div>
 
                             <div class="col-12 m-1">
                                 <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" value="@ViewBag.blog.Short_Description">
+                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" name="Short_Description" value="@ViewBag.blog.Short_Description">
                             </div>
 
                             <div class="col-12 m-1">
                                 <label for="inputEditDescTitleBlog" class="col-form-label">Chi tiết</label>
-                                <textarea class="form-control" rows="7" id="inputEditDescTitleBlog">@ViewBag.blog.Description</textarea>
+                                <textarea class="form-control" rows="7" id="inputEditDescTitleBlog" name="Description">@ViewBag.blog.Description</textarea>
                             </div>
 
                             <div class="col-md-12 m-1 input-img-create-blog">
                                 <label for="inputEditFile" class="col-form-label">Hình ảnh</label>
-                                <input class="form-control " id="inputEditFile" type="file">
+                                <input class="form-control" name="ImageUrl" id="inputEditFile" value="@ViewBag.blog.ImageUrl" type="file">
                             </div>
 
                             <div class="col-md-12 m-1">
                                 <label for="inputEditCategory" class="col-form-label">Loại</label>
-                                <select id="inputEditCategory" class="form-control with-25">
-                                    <option selected value="1">Thời sự</option>
-                                    <option>Thế giới</option>
-                                    <option>Kinh doanh</option>
-                                    <option>Giải trí</option>
-                                    <option>Thể thao</option>
-                                    <option>Pháp luật</option>
+                                <select id="inputNewCategory" class="form-control with-25" name="Category_Id">
+                                    @{
+                                        foreach (CategoryModel category in ViewBag.listCategory)
+                                        {
+                                            if (category.Id == ViewBag.blog.Category_Id)
+                                            {
+                                                <option selected value="@category.Id">@category.Name</option>
+
+                                            }
+                                            else
+                                            {
+                                                <option value="@category.Id">@category.Name</option>
+
+                                            }
+
+                                        }
+                                    }
                                 </select>
                             </div>
 
@@ -86,13 +97,13 @@
                                     <label class="col-form-label"> Public</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="radioEidtPublic" id="radioEidtPublicYes">
+                                    <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="radioEidtPublic" id="radioEidtPublicNo" checked>
+                                    <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo" checked>
                                     <label class="form-check-label" for="radioEidtPublicNo">
                                         No
                                     </label>
@@ -100,14 +111,26 @@
                             </div>
                             <div class="col-12 m-1">
                                 <label for="inputEditPublicDate" class="col-form-label">Date public</label>
-                                <input type="date" id="inputEditPublicDate" class="form-control with-30" placeholder="mm/dd/yyyy">
+                                @{
+                                    if (ViewBag.blog.Public_Date != null)
+                                    {
+                                        <input type="date" id="inputEditPublicDate" class="form-control with-30" value="ViewBag.blog.Public_Date.ToString("MM/dd/yyyy")" name="Public_Date" placeholder="MM/dd/yyyy">
+
+                                    }
+                                    else
+                                    {
+                                        <input type="date" id="inputEditPublicDate" class="form-control with-30" value="" name="Public_Date" placeholder="MM/dd/yyyy">
+
+                                    }
+                                }
                             </div>
                         </div>
+                        <div class="col-12 pt-3 text-center">
+                            <button class="btn btn-success c" type="submit">Submit</button>
+                            <button class="btn btn-primary" type="button" onclick="editClear()"> Clear</button>
+                        </div>
                     </form>
-                    <div class="col-12 pt-3 text-center">
-                        <button class="btn btn-success c" type="submit">Submit</button>
-                        <button class="btn btn-primary"  onclick="editClear()"> Clear</button>
-                    </div>
+
                 }
             }
         </div>

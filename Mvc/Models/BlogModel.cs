@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,8 +9,12 @@ namespace Mvc.Models
     public class BlogModel
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Tiêu đề không được trống")]
         public String Title { get; set; }
+        [Required(ErrorMessage = "Mô tả ngắn không được trống")]
         public String Short_Description { get; set; }
+        [Required(ErrorMessage = "Chi tiết không được trống")]
         public String Description { get; set; }
         public String ImageUrl { get; set; }
         public String Place { get; set; }
