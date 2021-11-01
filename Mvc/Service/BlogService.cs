@@ -16,9 +16,8 @@ namespace Mvc.Service
         /// </summary>
         /// <param name="blog"></param>
         /// <returns></returns>
-        public String insertBlog(BlogModel blog)
+        public bool insertBlog(BlogModel blog)
         {
-            string result = "";
             try
             {
                 cnn.OpenConnection();
@@ -37,13 +36,13 @@ namespace Mvc.Service
                 cmd.Parameters.AddWithValue("@updated_at", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
 
-                result = cmd.ExecuteScalar().ToString();
+                cmd.ExecuteNonQuery();
 
-                return result;
+                return true;
             }
             catch
             {
-                return result;
+                return false;
             }
             finally
             {
@@ -102,7 +101,7 @@ namespace Mvc.Service
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("select * from blog where title like %" + title + "% and is_active = true", cnn.Connection);
+                MySqlCommand cmd = new MySqlCommand("select * from blog where title like '%" + title + "%' and is_active = true", cnn.Connection);
 
                 using (var reader = cmd.ExecuteReader())
                 {

@@ -15,15 +15,50 @@ namespace Mvc.Controllers
             ViewBag.listBlog = blogs;
             return View();
         }
-        public IActionResult Search(String search)
+        public IActionResult Search(BlogModel input)
         {
-            ViewBag.listSearchBlog = findByTitle(search);
+            if (String.IsNullOrEmpty(input.Title))
+            {
+                ViewBag.listSearchBlog = findAll();
+            }
+            else
+            {
+                ViewBag.listSearchBlog = findByTitle(input.Title);
+
+            }
+            ViewBag.SearchStr = input.Title;
             return View();
         }
         public IActionResult Create(BlogModel input)
         {
+            bool check = false;
+            if (!String.IsNullOrEmpty(input.Title))
+            {
+                check = true;
+                bool insertChecked = blogService.insertBlog(input);
+                
+
+                if (insertChecked)
+                {
+                    ViewData["MessageInsert"] = "Thêm mới thành công !";
+                }
+                else
+                {
+                    ViewData["MessageInsert"] = "Thêm mới thất bại !";
+                }
+            }
+
+            ViewBag.CheckInsert = check;
+            ViewBag.listCategory = getListCategory();
+
             return View();
         }
+           
+        /// <summary>
+        /// Edit view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Edit(int id)
         {
             ViewBag.blog = findById(id);
@@ -67,6 +102,11 @@ namespace Mvc.Controllers
         public ActionResult deleteBlogById([FromBody] BlogModel input)
         {             
             return blogService.deletById(input.Id) ? Json(data: true) : Json(data: false); ;
+        }
+
+        public List<CategoryModel> getListCategory()
+        {
+            return categoryService.findAll();
         }
     }
 }

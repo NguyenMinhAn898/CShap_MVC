@@ -16,7 +16,7 @@ function deleteBlog(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: 'blog/deleteBlogById',
+                url: '/blog/deleteBlogById',
                 type: 'DELETE',
                 data: JSON.stringify({ Id: id }),
                 contentType: "application/json; charset=utf-8",
@@ -29,7 +29,11 @@ function deleteBlog(id) {
                             title: 'Xóa thành công !',
                             showConfirmButton: false,
                             timer: 1500
+                        }).then(() => {
+                            location.reload(true);
+
                         })
+
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -41,7 +45,7 @@ function deleteBlog(id) {
                     }
                 }
             });
-
+            
         }
     })
 }
@@ -95,3 +99,9 @@ function newClear() {
     document.getElementById("inputEditPublicDate").value = "";
 }
 
+/* Search blog js */
+function searchBlog() {
+    var search = document.getElementById('inputSearchTitleBlog').value;
+    //if (search) {
+    //}
+}

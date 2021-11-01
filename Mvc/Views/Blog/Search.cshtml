@@ -11,16 +11,16 @@
         </div>
         <div class="card-body px-1">
             <div class="search-blog py-3">
-                <form>
+                <form method="get" action="/blog/Search" enctype="application/x-www-form-urlencoded">
                     <div class="row  align-items-center">
                         <div class="col-md-2">
                             <label for="inputSearchTitleBlog" class="col-form-label">Tiêu đề</label>
                         </div>
                         <div class="col-md-10">
-                            <input type="text" id="inputSearchTitleBlog" class="form-control" placeholder="Tiêu đề">
+                            <input type="text" name="Title" id="inputSearchTitleBlog" class="form-control " placeholder="Tiêu đề" value="@ViewBag.SearchStr">
                         </div>
                         <div class="col-12 py-3">
-                            <button class="btn btn-success"> Search</button>
+                            <button class="btn btn-success" type="submit"> Search</button>
                         </div>
                     </div>
                 </form>                
@@ -41,32 +41,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
-                            <th>1</th>
-                            <td>Mark</td>
-                            <td>
-                                <a class="link-primary"> <span>Edit</span></a>
-                            </td>
-                            <td>
-                                <button class="btn btn-outline-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
-                            <th>1</th>
-                            <td>Mark</td>
-                            <td><a class="link-primary" > Edit</a></td>
-                            <td>
-                                <button class="btn btn-outline-danger">Delete</button>
-                            </td>
-                        </tr>
+                        @foreach (BlogModel blog in ViewBag.listSearchBlog)
+                        {
+                            <tr>
+                                <th scope="row">@blog.Id</th>
+                                <td>@blog.Title</td>
+                                <td>Otto</td>
+                                @{
+                                    if (blog.Is_active)
+                                    {
+                                        <td>Yes</td>
+                                    }
+                                    else
+                                    {
+                                        <td>No</td>
+                                    }
+                                }
+                                <th>@blog.Place</th>
+                                <td>Mark</td>
+                                <td>
+                                    <a class="link-primary" href='@Url.Action("Edit","Blog")?id=@blog.Id'> <span>Edit</span></a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger" onclick='deleteBlog(@blog.Id)'>Delete</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
