@@ -1,10 +1,8 @@
 ﻿
-@using Mvc.Models
+@model BlogDataModel
 
 @{
     ViewData["Title"] = "Edit Blog";
-    var blogDetail = ViewBag.blog;
-    var listCateogry = ViewBag.listCategory;
 }
 
 <div class="edit-blog">
@@ -13,7 +11,7 @@
             <h4>Edit Blogs</h4>
         </div>
         <div class="card-body p-2 with-50">
-            @{ if (blogDetail == null)
+            @{ if (Model.Blog.Title == null)
                 {
                     <div class="row text-center">
                         <h3 class="mx-3">Không tồn tại dữ liệu</h3>
@@ -24,11 +22,11 @@
                     @using (Html.BeginForm("updateBlog", "Blog", FormMethod.Post, new { @class = "needs-validation", novalidate = "" }))
                     {
                         <div class="row align-items-center ">
-                            <input type="hidden" id="inputEditIdBlog" name="Id" value="@blogDetail.Id" />
+                            <input type="hidden" id="inputEditIdBlog" name="Id" value="@Model.Blog.Id" />
 
                             <div class="col-12 mt-4 has-validation">
                                 <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                                <input type="text" id="inputEditTitleBlog" class="form-control" name="Title" value="@blogDetail.Title " required>
+                                <input type="text" id="inputEditTitleBlog" class="form-control" name="Title" value="@Model.Blog.Title " required>
                                 <div class="invalid-tooltip">
                                     Title not null
                                 </div>
@@ -36,7 +34,7 @@
 
                             <div class="col-12 mt-4 has-validation">
                                 <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" name="Short_Description" value="@blogDetail.Short_Description" required>
+                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" name="Short_Description" value="@Model.Blog.Short_Description" required>
                                 <div class="invalid-tooltip">
                                     Short Description not null
                                 </div>
@@ -44,7 +42,7 @@
 
                             <div class="col-12 mt-4">
                                 <label for="inputEditDescTitleBlog" class="col-form-label">Chi tiết</label>
-                                <textarea class="form-control" rows="6" id="inputEditDescTitleBlog" name="Description" required>@blogDetail.Description</textarea>
+                                <textarea class="form-control" rows="6" id="inputEditDescTitleBlog" name="Description" required>@Model.Blog.Description</textarea>
                                 <div class="invalid-tooltip">
                                     Description not null
                                 </div>
@@ -52,21 +50,17 @@
 
                             <div class="col-md-12 mt-4 input-img-create-blog">
                                 <label for="inputEditFile" class="col-form-label">Hình ảnh</label>
-                                <input class="form-control-novalidate with-75" name="ImageUrl" id="inputEditFile" value="@blogDetail.ImageUrl" type="file" >
-                                @{if (blogDetail.ImageUrl != null)
-                                    {
-                                        <span>@blogDetail.ImageUrl</span>
-                                    }
-                                }
+                                <input class="form-control-novalidate with-75" name="ImageUrl" id="inputEditFile" value="@Model.Blog.ImageUrl" type="file">
+                                
                             </div>
 
                             <div class="col-md-12 mt-4">
                                 <label for="inputEditCategory" class="col-form-label">Loại</label>
                                 <select id="inputNewCategory" class="form-control-novalidate with-25" name="Category_Id">
                                     @{
-                                        foreach (CategoryModel category in listCateogry)
+                                        foreach (CategoryModel category in Model.listCategory)
                                         {
-                                            if (category.Id == blogDetail.Category_Id)
+                                            if (category.Id == Model.Blog.Category_Id)
                                             {
                                                 <option selected value="@category.Id">@category.Name</option>
                                             }
@@ -83,30 +77,17 @@
                                 <div class="col-md-12">
                                     <label class="col-form-label">Vị trí</label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="Việt Nam" id="placeEditVietName" checked>
-                                    <label class="form-check-label" for="placeEditVietName">
-                                        Việt Nam
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="Châu Á" id="placeEditAsian">
-                                    <label class="form-check-label" for="placeEditAsian">
-                                        Châu Á
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="Châu Âu" id="placeEditEuro">
-                                    <label class="form-check-label" for="placeEditEuro">
-                                        Châu Âu
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="Châu Mỹ" id="placeEditAmerica">
-                                    <label class="form-check-label" for="placeEditAmerica">
-                                        Châu Mỹ
-                                    </label>
-                                </div>
+                                @{
+                                    foreach (var pl in Model.listPlace)
+                                    {
+                                        <div class="form-check">
+                                            @Html.CheckBox("placeEdit"+pl.Id, pl.Id == 1 ? true : false, new {@class= "form-check-input" })
+                                            <label class="form-check-label" for="placeEditVietName">
+                                                @Html.DisplayFor(name=>pl.Name)
+                                            </label>
+                                        </div>
+                                    }
+                                }
                             </div>
                             <div class="col-md-12 mt-4">
                                 <div>
@@ -114,7 +95,7 @@
                                 </div>
                                 <div class="form-check">
                                     @{
-                                        if (blogDetail.Status)
+                                        if (Model.Blog.Status)
                                         {
                                             <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes" checked>
                                         }
@@ -129,7 +110,7 @@
                                 </div>
                                 <div class="form-check">
                                     @{
-                                        if (blogDetail.Status)
+                                        if (Model.Blog.Status)
                                         {
                                             <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo">
                                         }
@@ -146,9 +127,9 @@
                             <div class="col-12 mt-4">
                                 <label for="inputEditPublicDate" class="col-form-label">Date public</label>
                                 @{
-                                    if (blogDetail.Public_Date != null)
+                                    if (Model.Blog.Public_Date != null)
                                     {
-                                        <input type="date" id="inputEditPublicDate" class="form-control-novalidate with-30" value="@blogDetail.Public_Date.ToString("yyyy-MM-dd")" name="Public_Date" placeholder="MM/dd/yyyy">
+                                        <input type="date" id="inputEditPublicDate" class="form-control-novalidate with-30" value="@Model.Blog.Public_Date_Str" name="Public_Date" placeholder="MM/dd/yyyy">
 
                                     }
                                     else

@@ -29,7 +29,9 @@
                             <tr>
                                 <th scope="row">@Html.DisplayFor(Id => blog.Id)</th>
                                 <td> @Html.DisplayFor(title => blog.Title)</td>
-                                <td>Otto</td>
+                                <td>
+                                    Thời sự 
+                                </td>
                                 @{
                                     if (blog.Is_active)
                                     {
@@ -40,11 +42,11 @@
                                         <td>No</td>
                                     }
                                 }
-                            <td>
-                                @Html.DisplayFor(place=>blog.Place)
-                            </td>
                                 <td>
-                                    @blog.Public_Date_Str
+                                    @Html.DisplayFor(place => blog.Place)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(place => blog.Public_Date_Str)
                                 </td>
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", "Blog", new { id = blog.Id }, new { @class = "link-primary" })
@@ -53,7 +55,7 @@
                                     <button class="btn btn-outline-danger" onclick='deleteBlog(@blog.Id)'>Delete</button>
                                 </td>
                             </tr>
-                         }
+                        }
                     </tbody>
                 </table>
             </div>

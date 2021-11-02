@@ -17,8 +17,6 @@ namespace Mvc.Controllers
         {
             BlogDataModel data = new BlogDataModel();
             data.listBlogs = blogService.findAll();
-            data.listCategory = initCategory();
-            data.listPlace = initPlace();
 
             return View(data);
         }
@@ -30,15 +28,18 @@ namespace Mvc.Controllers
         /// <returns></returns>
         public IActionResult Search(BlogModel input)
         {
+            BlogDataModel data = new BlogDataModel();
+            data.Title_Search = input.Title;
+
             if (String.IsNullOrEmpty(input.Title))
             {
-                ViewBag.listSearchBlog = blogService.findAll();
+                data.listBlogs = blogService.findAll();
             }
             else
             {
-                ViewBag.listSearchBlog = blogService.findByTile(input.Title);
+                data.listBlogs = blogService.findByTile(input.Title);
             }
-            return View();
+            return View(data);
         }
 
         /// <summary>
@@ -78,9 +79,11 @@ namespace Mvc.Controllers
         /// <returns></returns>
         public IActionResult Edit(int id)
         {
-            ViewBag.blog = blogService.findById(id);
-            ViewBag.listCategory = categoryService.findAll();
-            return View();
+            BlogDataModel data = new BlogDataModel();
+            data.Blog = blogService.findById(id);
+            data.listCategory = categoryService.findAll();
+            data.listPlace = initPlace();
+            return View(data);
         }
 
         /// <summary>
