@@ -10,15 +10,16 @@ namespace Mvc.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Tiêu đề không được trống")]
+        [Required(ErrorMessage = "Description not null")]
         public String Title { get; set; }
-        [Required(ErrorMessage = "Mô tả ngắn không được trống")]
+        [Required(ErrorMessage = "Description not null")]
         public String Short_Description { get; set; }
-        [Required(ErrorMessage = "Chi tiết không được trống")]
+        [Required(ErrorMessage = "Description not null")]
         public String Description { get; set; }
         public String ImageUrl { get; set; }
         public String Place { get; set; }
         public int Category_Id { get; set; }
+        [Required]
         public DateTime? Public_Date { get; set; }
 
         public String Public_Date_Str

@@ -57,7 +57,7 @@
                                         <td>No</td>
                                     }
                                 }
-                                <th>@blog.Place</th>
+                                <td>@blog.Place</td>
                                 <td>@blog.Public_Date_Str</td>
                                 <td>
                                     <a class="link-primary" href='@Url.Action("Edit","Blog")?id=@blog.Id'> <span>Edit</span></a>
@@ -66,7 +66,7 @@
                                     <button class="btn btn-outline-danger" onclick='deleteBlog(@blog.Id)'>Delete</button>
                                 </td>
                             </tr>
-                        }
+                         }
                     </tbody>
                 </table>
             </div>
