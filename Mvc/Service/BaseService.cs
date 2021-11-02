@@ -1,4 +1,5 @@
 ﻿using Mvc.Db;
+using Mvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Mvc.Service
     public abstract class BaseService
     {
         protected DBConnect cnn = new DBConnect();
+       
     }
 }

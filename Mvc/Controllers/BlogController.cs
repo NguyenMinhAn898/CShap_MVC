@@ -15,9 +15,12 @@ namespace Mvc.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            List<BlogModel> blogs = blogService.findAll();
-            ViewBag.listBlog = blogs;
-            return View();
+            BlogDataModel data = new BlogDataModel();
+            data.listBlogs = blogService.findAll();
+            data.listCategory = initCategory();
+            data.listPlace = initPlace();
+
+            return View(data);
         }
 
         /// <summary>

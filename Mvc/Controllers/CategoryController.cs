@@ -13,12 +13,6 @@ namespace Mvc.Controllers
 {
     public class CategoryController : BaseController
     {
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         public List<CategoryModel> FindAll()
         {
             List<CategoryModel> list = categoryService.findAll();

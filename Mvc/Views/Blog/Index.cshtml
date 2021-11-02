@@ -1,8 +1,7 @@
-﻿@model BlogModel
+﻿@model BlogDataModel
 
 @{
     ViewData["Title"] = "List Blog";
-    var listBlog = ViewBag.listBlog;
 }
 <div class="list-blog">
     <div class="card px-1">
@@ -25,11 +24,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (BlogModel blog in listBlog)
+                        @foreach (var blog in Model.listBlogs)
                         {
                             <tr>
-                                <th scope="row">@blog.Id</th>
-                                <td>@blog.Title</td>
+                                <th scope="row">@Html.DisplayFor(Id => blog.Id)</th>
+                                <td> @Html.DisplayFor(title => blog.Title)</td>
                                 <td>Otto</td>
                                 @{
                                     if (blog.Is_active)
@@ -41,18 +40,20 @@
                                         <td>No</td>
                                     }
                                 }
-                                <td>@blog.Place</td>
+                            <td>
+                                @Html.DisplayFor(place=>blog.Place)
+                            </td>
                                 <td>
                                     @blog.Public_Date_Str
                                 </td>
                                 <td>
-                                    <a class="link-primary" href='@Url.Action("Edit","Blog")?id=@blog.Id'> <span>Edit</span></a>
+                                    @Html.ActionLink("Edit", "Edit", "Blog", new { id = blog.Id }, new { @class = "link-primary" })
                                 </td>
                                 <td>
                                     <button class="btn btn-outline-danger" onclick='deleteBlog(@blog.Id)'>Delete</button>
                                 </td>
                             </tr>
-                        }
+                         }
                     </tbody>
                 </table>
             </div>
