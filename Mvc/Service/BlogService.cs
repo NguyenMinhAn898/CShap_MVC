@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Mvc.Service
 {
-    public class BlogService:BaseService
+    public class BlogService : BaseService
     {
-        public BlogService() { }
-
         /// <summary>
         /// Insert Blog
         /// </summary>
@@ -22,22 +20,31 @@ namespace Mvc.Service
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO blog" +
-                    "(id, title, short_description, description, img_url, category_id, place, public_date, status, is_active, updated_at, created_at) " +
-                    "VALUES (NULL,@title,@short_description, @description, @img_url, @category_id, @place, @public_date, @status, @is_active, @updated_at, @created_at)", cnn.Connection);
-                cmd.Parameters.AddWithValue("@title", blog.Title);
-                cmd.Parameters.AddWithValue("@short_description", blog.Short_Description);
-                cmd.Parameters.AddWithValue("@description", blog.Description);
-                cmd.Parameters.AddWithValue("@img_url", blog.ImageUrl);
-                cmd.Parameters.AddWithValue("@category_id", blog.Category_Id);
-                cmd.Parameters.AddWithValue("@place", blog.Place);
-                cmd.Parameters.AddWithValue("@public_date", blog.Public_Date);
-                cmd.Parameters.AddWithValue("@status", blog.Status);
-                cmd.Parameters.AddWithValue("@is_active", true);
-                cmd.Parameters.AddWithValue("@updated_at", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_at", DateTime.Now);
+                MySqlCommand cmd = new MySqlCommand("InsertBlog", cnn.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("Title", blog.Title);
+                cmd.Parameters.AddWithValue("Short_Description", blog.Short_Description);
+                cmd.Parameters.AddWithValue("Description", blog.Description);
+                cmd.Parameters.AddWithValue("Img_Url", blog.ImageUrl);
+                cmd.Parameters.AddWithValue("Category_Id", blog.Category_Id);
+                cmd.Parameters.AddWithValue("Place", blog.Place);
+
+                // parameters is boolean
+                MySqlParameter param = new MySqlParameter();
+                param.ParameterName = "Status_Public";
+                param.Value = blog.Status;
+                param.DbType = System.Data.DbType.Boolean;
+                cmd.Parameters.Add(param);
+
+                // parameters is date time
+                MySqlParameter paramPublicDate = new MySqlParameter();
+                paramPublicDate.ParameterName = "Public_Date";
+                paramPublicDate.Value = blog.Public_Date;
+                paramPublicDate.DbType = System.Data.DbType.DateTime;
+                cmd.Parameters.Add(paramPublicDate);
+
+                cmd.ExecuteReader();
 
                 return true;
             }
@@ -68,15 +75,17 @@ namespace Mvc.Service
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);
 
-                foreach(DataRow dr in dt.Rows)
+                foreach (DataRow dr in dt.Rows)
                 {
                     BlogModel blog = new BlogModel();
                     blog.Id = Convert.ToInt32(dr["id"]);
                     blog.Title = dr["title"].ToString();
                     blog.Short_Description = dr["short_description"].ToString();
                     blog.Description = dr["description"].ToString();
+                    blog.ImageUrl = dr["img_url"].ToString();
                     blog.Place = dr["place"].ToString();
                     blog.Is_active = Convert.ToBoolean(dr["is_active"]);
+                    blog.Public_Date = !String.IsNullOrEmpty(dr["public_date"].ToString()) ? Convert.ToDateTime(dr["public_date"]) : null;
 
                     list.Add(blog);
                 }
@@ -99,27 +108,33 @@ namespace Mvc.Service
         /// <returns></returns>
         public List<BlogModel> findByTile(String title)
         {
+            DataTable dt = new DataTable();
             List<BlogModel> list = new List<BlogModel>();
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("select * from blog where title like '%" + title + "%' and is_active = true", cnn.Connection);
+                MySqlCommand cmd = new MySqlCommand("GetAllBlogsByTitle", cnn.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                using (var reader = cmd.ExecuteReader())
+                cmd.Parameters.AddWithValue("Title", title);
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                foreach (DataRow dr in dt.Rows)
                 {
-                    while (reader.Read())
-                    {
-                        BlogModel blog = new BlogModel();
-                        blog.Id = Convert.ToInt32(reader["id"]);
-                        blog.Title = reader["title"].ToString();
-                        blog.Short_Description = reader["short_description"].ToString();
-                        blog.Description = reader["description"].ToString();
-                        blog.Place = reader["place"].ToString();
-                        blog.Is_active = Convert.ToBoolean(reader["is_active"]);
+                    BlogModel blog = new BlogModel();
+                    blog.Id = Convert.ToInt32(dr["id"]);
+                    blog.Title = dr["title"].ToString();
+                    blog.Short_Description = dr["short_description"].ToString();
+                    blog.Description = dr["description"].ToString();
+                    blog.Place = dr["place"].ToString();
+                    blog.Status = Convert.ToBoolean(dr["status"]);
+                    blog.ImageUrl = dr["img_url"].ToString();
+                    blog.Is_active = Convert.ToBoolean(dr["is_active"]);
+                    blog.Public_Date = !String.IsNullOrEmpty(dr["public_date"].ToString()) ? Convert.ToDateTime(dr["public_date"]) : null;
 
-                        list.Add(blog);
-                    }
-                    reader.Close();
+                    list.Add(blog);
                 }
                 return list;
             }
@@ -140,27 +155,32 @@ namespace Mvc.Service
         /// <returns></returns>
         public BlogModel findById(int id)
         {
+            if (id <= 0)
+                return null;
+
+            DataTable dt = new DataTable();
             BlogModel blog = new BlogModel();
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("select * from blog where id = " + id + " and is_active = true", cnn.Connection);
+                MySqlCommand cmd = new MySqlCommand("GetBlogById", cnn.Connection);
+                cmd.Parameters.AddWithValue("BlogId", id);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                using (var reader = cmd.ExecuteReader())
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
                 {
-                    while (reader.Read())
-                    {
-                        blog.Id = Convert.ToInt32(reader["id"]);
-                        blog.Category_Id = Convert.ToInt32(reader["category_id"]);
-                        blog.Title = reader["title"].ToString();
-                        blog.Short_Description = reader["short_description"].ToString();
-                        blog.Description = reader["description"].ToString();
-                        blog.Place = reader["place"].ToString();
-                        blog.Status = Convert.ToBoolean(reader["Status"]);
-                        blog.Is_active = Convert.ToBoolean(reader["is_active"]);
-                        blog.Public_Date = !String.IsNullOrEmpty(reader["public_date"].ToString()) ? Convert.ToDateTime(reader["public_date"]) : null;
-                    }
-                    reader.Close();
+                    blog.Id = Convert.ToInt32(dr["id"]);
+                    blog.Category_Id = Convert.ToInt32(dr["category_id"]);
+                    blog.Title = dr["title"].ToString();
+                    blog.Short_Description = dr["short_description"].ToString();
+                    blog.Description = dr["description"].ToString();
+                    blog.Place = dr["place"].ToString();
+                    blog.Status = Convert.ToBoolean(dr["status"]);
+                    blog.ImageUrl = dr["img_url"].ToString();
+                    blog.Is_active = Convert.ToBoolean(dr["is_active"]);
+                    blog.Public_Date = !String.IsNullOrEmpty(dr["public_date"].ToString()) ? Convert.ToDateTime(dr["public_date"]) : null;
                 }
                 return blog;
             }
@@ -185,9 +205,11 @@ namespace Mvc.Service
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("update blog set is_active = false where id ="+id+" and is_active = true", cnn.Connection);
-                cmd.ExecuteReader();
+                MySqlCommand cmd = new MySqlCommand("DeleteBlogsById", cnn.Connection);
+                cmd.Parameters.AddWithValue("BlogId", id);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.ExecuteReader();
                 return true;
             }
             catch
@@ -200,32 +222,46 @@ namespace Mvc.Service
             }
         }
 
+        /// <summary>
+        /// Update blog 
+        /// </summary>
+        /// <param name="blog"></param>
+        /// <returns></returns>
         public bool update(BlogModel blog)
         {
             try
             {
                 cnn.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand("Update blog Set title=@title, short_description=@short_description," +
-                    " description=@description, img_url=@img_url, category_id=@category_id, place=@place, public_date=@public_date," +
-                    " status=@status where id =@id and is_active = true", cnn.Connection);
+                MySqlCommand cmd = new MySqlCommand("UpdateBlogs", cnn.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@title", blog.Title);
-                cmd.Parameters.AddWithValue("@short_description", blog.Short_Description);
-                cmd.Parameters.AddWithValue("@description", blog.Description);
-                cmd.Parameters.AddWithValue("@img_url", blog.ImageUrl);
-                cmd.Parameters.AddWithValue("@category_id", blog.Category_Id);
-                cmd.Parameters.AddWithValue("@place", blog.Place);
-                cmd.Parameters.AddWithValue("@public_date", blog.Public_Date);
-                cmd.Parameters.AddWithValue("@status", blog.Status);
-                cmd.Parameters.AddWithValue("@id", blog.Id);
+                cmd.Parameters.AddWithValue("Id", blog.Id);
+                cmd.Parameters.AddWithValue("Title", blog.Title);
+                cmd.Parameters.AddWithValue("Short_Description", blog.Short_Description);
+                cmd.Parameters.AddWithValue("Description", blog.Description);
+                cmd.Parameters.AddWithValue("Img_Url", blog.ImageUrl);
+                cmd.Parameters.AddWithValue("Category_Id", blog.Category_Id);
+                cmd.Parameters.AddWithValue("Place", blog.Place);
+                // parameters is boolean
+                MySqlParameter param = new MySqlParameter();
+                param.ParameterName = "Status_Public";
+                param.Value = blog.Status;
+                param.DbType = System.Data.DbType.Boolean;
+                cmd.Parameters.Add(param);
+
+                // parameters is date time
+                MySqlParameter paramPublicDate = new MySqlParameter();
+                paramPublicDate.ParameterName = "Public_Date";
+                paramPublicDate.Value = blog.Public_Date;
+                paramPublicDate.DbType = System.Data.DbType.DateTime;
+                cmd.Parameters.Add(paramPublicDate);
 
                 cmd.ExecuteReader();
 
                 return true;
             }
-            catch(Exception e)
+            catch
             {
-                e.ToString();
                 return false;
             }
             finally

@@ -9,91 +9,77 @@ namespace Mvc.Controllers
 {
     public class BlogController : BaseController
     {
+        /// <summary>
+        /// Blog index view
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
-            List<BlogModel> blogs = findAll();
+            List<BlogModel> blogs = blogService.findAll();
             ViewBag.listBlog = blogs;
             return View();
         }
+
+        /// <summary>
+        /// Blog Search view
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public IActionResult Search(BlogModel input)
         {
             if (String.IsNullOrEmpty(input.Title))
             {
-                ViewBag.listSearchBlog = findAll();
+                ViewBag.listSearchBlog = blogService.findAll();
             }
             else
             {
-                ViewBag.listSearchBlog = findByTitle(input.Title);
-
+                ViewBag.listSearchBlog = blogService.findByTile(input.Title);
             }
-            ViewBag.SearchStr = input.Title;
             return View();
         }
+
+        /// <summary>
+        /// Blog Create view
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public IActionResult Create(BlogModel input)
         {
             bool check = false;
+            ViewData["MessageInsert"] = "";
+
             if (!String.IsNullOrEmpty(input.Title))
             {
                 check = true;
-                bool insertChecked = blogService.insertBlog(input);
-                
+                bool insertChecked = blogService.insertBlog(input);                
 
                 if (insertChecked)
                 {
-                    ViewData["MessageInsert"] = "Thêm mới thành công !";
+                    ViewData["MessageInsert"] = "Successfully added new blog!";
                 }
                 else
                 {
-                    ViewData["MessageInsert"] = "Thêm mới thất bại !";
+                    ViewData["MessageInsert"] = "Add new blog fail !";
                 }
             }
-
             ViewBag.CheckInsert = check;
-            ViewBag.listCategory = getListCategory();
+            ViewBag.listCategory = categoryService.findAll();
 
             return View();
         }
            
         /// <summary>
-        /// Edit view
+        /// Blog Edit view
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public IActionResult Edit(int id)
         {
-            ViewBag.blog = findById(id);
-            ViewBag.listCategory = getListCategory();
+            ViewBag.blog = blogService.findById(id);
+            ViewBag.listCategory = categoryService.findAll();
             return View();
         }
 
-        /// <summary>
-        /// Find All Blog
-        /// </summary>
-        /// <returns></returns>
-        private List<BlogModel> findAll()
-        {
-            return blogService.findAll();
-        }
-
-        /// <summary>
-        /// Get list Blog by Title
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        private List<BlogModel> findByTitle(String title)
-        {
-            return blogService.findByTile(title);
-        }
-
-        private BlogModel findById(int id=0)
-        {
-            if (id <= 0)
-                return null;
-            BlogModel output = blogService.findById(id);
-            if (output.Title == null)
-                return null;
-            return output;
-        }
         /// <summary>
         /// Delete row by id
         /// </summary>
@@ -105,16 +91,29 @@ namespace Mvc.Controllers
             return blogService.deletById(input.Id) ? Json(data: true) : Json(data: false); ;
         }
 
-        public List<CategoryModel> getListCategory()
+        /// <summary>
+        /// Update blog 
+        /// </summary>
+        /// <param name="blog"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult updateBlog(BlogModel blog)
         {
-            return categoryService.findAll();
+            blogService.update(blog);
+            return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Create new Blog
+        /// </summary>
+        /// <param name="newBlog"></param>
+        /// <returns></returns>
         [HttpPost]
-        public bool updateBlog(BlogModel blog)
+        public ActionResult createBlog(BlogModel newBlog)
         {
+            blogService.insertBlog(newBlog);
 
-            return blogService.update(blog);
+            return RedirectToAction("Index");
         }
     }
 }

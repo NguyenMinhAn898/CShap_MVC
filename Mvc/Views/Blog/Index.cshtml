@@ -1,7 +1,8 @@
-﻿@using Mvc.Models
+﻿@model BlogModel
 
 @{
     ViewData["Title"] = "List Blog";
+    var listBlog = ViewBag.listBlog;
 }
 <div class="list-blog">
     <div class="card px-1">
@@ -24,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (BlogModel blog in ViewBag.listBlog)
+                        @foreach (BlogModel blog in listBlog)
                         {
                             <tr>
                                 <th scope="row">@blog.Id</th>
@@ -41,7 +42,9 @@
                                     }
                                 }
                                 <th>@blog.Place</th>
-                                <td>Mark</td>
+                                <td>
+                                    @blog.Public_Date_Str
+                                </td>
                                 <td>
                                     <a class="link-primary" href='@Url.Action("Edit","Blog")?id=@blog.Id'> <span>Edit</span></a>
                                 </td>
@@ -49,7 +52,7 @@
                                     <button class="btn btn-outline-danger" onclick='deleteBlog(@blog.Id)'>Delete</button>
                                 </td>
                             </tr>
-                         }
+                        }
                     </tbody>
                 </table>
             </div>

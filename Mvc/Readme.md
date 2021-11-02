@@ -28,6 +28,20 @@ use devfast-mvc;
 
 	DELIMITER ;
 
+
+--- Find By Id ---
+	DELIMITER //
+
+	CREATE PROCEDURE GetBlogById
+	(
+		IN BlogId int
+	)
+	BEGIN
+		SELECT * FROM blog AS b WHERE b.id = BlogId AND b.is_active = true;
+	END //
+
+	DELIMITER ;
+
 --- update ---
 
 	DELIMITER //

@@ -20,6 +20,13 @@ namespace Mvc.Models
         public String Place { get; set; }
         public int Category_Id { get; set; }
         public DateTime? Public_Date { get; set; }
+
+        public String Public_Date_Str
+        {
+            get {
+                return Public_Date != null ? Public_Date.Value.ToString("MM/dd/yyyy") : "Chưa public";
+            }
+        }
         public bool Status { get; set; }
         public bool Is_active { get; set; }
         public DateTime? Updated_at { get; set; }

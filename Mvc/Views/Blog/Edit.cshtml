@@ -1,7 +1,10 @@
-﻿@using Mvc.Models
+﻿
+@using Mvc.Models
 
 @{
     ViewData["Title"] = "Edit Blog";
+    var blogDetail = ViewBag.blog;
+    var listCateogry = ViewBag.listCategory;
 }
 
 <div class="edit-blog">
@@ -10,7 +13,7 @@
             <h4>Edit Blogs</h4>
         </div>
         <div class="card-body p-2 with-50">
-            @{ if (ViewBag.blog == null)
+            @{ if (blogDetail == null)
                 {
                     <div class="row text-center">
                         <h3 class="mx-3">Không tồn tại dữ liệu</h3>
@@ -18,36 +21,42 @@
                 }
                 else
                 {
-                    <form method="post" action="/blog/updateBlog">
-                        <input type="hidden" id="inputEditIdBlog" name="Id" value="@ViewBag.blog.Id"/>
+                    @using (Html.BeginForm("updateBlog", "Blog", FormMethod.Post))
+                    {
+                        <input type="hidden" id="inputEditIdBlog" name="Id" value="@blogDetail.Id" />
                         <div class="row align-items-center">
                             <div class="col-12 m-1">
                                 <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                                <input type="text" id="inputEditTitleBlog" class="form-control" name="Title" value="@ViewBag.blog.Title ">
+                                <input type="text" id="inputEditTitleBlog" class="form-control" name="Title" value="@blogDetail.Title ">
                             </div>
 
                             <div class="col-12 m-1">
                                 <label for="inputShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" name="Short_Description" value="@ViewBag.blog.Short_Description">
+                                <input type="text" id="inputEditShortDescTitleBlog" class="form-control" name="Short_Description" value="@blogDetail.Short_Description">
                             </div>
 
                             <div class="col-12 m-1">
                                 <label for="inputEditDescTitleBlog" class="col-form-label">Chi tiết</label>
-                                <textarea class="form-control" rows="7" id="inputEditDescTitleBlog" name="Description">@ViewBag.blog.Description</textarea>
+                                <textarea class="form-control" rows="6" id="inputEditDescTitleBlog" name="Description">@blogDetail.Description</textarea>
                             </div>
 
                             <div class="col-md-12 m-1 input-img-create-blog">
                                 <label for="inputEditFile" class="col-form-label">Hình ảnh</label>
-                                <input class="form-control" name="ImageUrl" id="inputEditFile" value="@ViewBag.blog.ImageUrl" type="file">
+                                <input class="form-control" name="ImageUrl" id="inputEditFile" value="@blogDetail.ImageUrl" type="file">
+                                @{if (blogDetail.ImageUrl != null)
+                                    {
+                                        <span>@blogDetail.ImageUrl</span>
+                                    }
+                                }
                             </div>
 
                             <div class="col-md-12 m-1">
                                 <label for="inputEditCategory" class="col-form-label">Loại</label>
                                 <select id="inputNewCategory" class="form-control with-25" name="Category_Id">
                                     @{
-                                        foreach (CategoryModel category in ViewBag.listCategory)
+                                        foreach (CategoryModel category in listCateogry)
                                         {
-                                            if (category.Id == ViewBag.blog.Category_Id)
+                                            if (category.Id == blogDetail.Category_Id)
                                             {
                                                 <option selected value="@category.Id">@category.Name</option>
 
@@ -55,11 +64,11 @@
                                             else
                                             {
                                                 <option value="@category.Id">@category.Name</option>
-
                                             }
-
                                         }
-                                    }
+
+
+}
                                 </select>
                             </div>
 
@@ -97,13 +106,31 @@
                                     <label class="col-form-label"> Public</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes">
+                                    @{
+                                        if (blogDetail.Status)
+                                        {
+                                            <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes" checked>
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes">
+                                        }
+                                    }
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo" checked>
+                                    @{
+                                        if (blogDetail.Status)
+                                        {
+                                            <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo" >
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo" checked>
+                                        }
+                                    }
                                     <label class="form-check-label" for="radioEidtPublicNo">
                                         No
                                     </label>
@@ -112,15 +139,14 @@
                             <div class="col-12 m-1">
                                 <label for="inputEditPublicDate" class="col-form-label">Date public</label>
                                 @{
-                                    if (ViewBag.blog.Public_Date != null)
+                                    if (blogDetail.Public_Date != null)
                                     {
-                                        <input type="date" id="inputEditPublicDate" class="form-control with-30" value="ViewBag.blog.Public_Date.ToString("MM/dd/yyyy")" name="Public_Date" placeholder="MM/dd/yyyy">
+                                        <input type="date" id="inputEditPublicDate" class="form-control with-30" value="@blogDetail.Public_Date.ToString("yyyy-MM-dd")" name="Public_Date" placeholder="MM/dd/yyyy">
 
                                     }
                                     else
                                     {
                                         <input type="date" id="inputEditPublicDate" class="form-control with-30" value="" name="Public_Date" placeholder="MM/dd/yyyy">
-
                                     }
                                 }
                             </div>
@@ -129,8 +155,7 @@
                             <button class="btn btn-success c" type="submit">Submit</button>
                             <button class="btn btn-primary" type="button" onclick="editClear()"> Clear</button>
                         </div>
-                    </form>
-
+                    }
                 }
             }
         </div>
