@@ -26,7 +26,14 @@ namespace Mvc.Service
                 cmd.Parameters.AddWithValue("Title", blog.Title);
                 cmd.Parameters.AddWithValue("Short_Description", blog.Short_Description);
                 cmd.Parameters.AddWithValue("Description", blog.Description);
-                cmd.Parameters.AddWithValue("Img_Url", blog.ImageUrl);
+                if (String.IsNullOrEmpty(blog.ImageUrl))
+                {
+                    cmd.Parameters.AddWithValue("Img_Url", System.DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("Img_Url", blog.ImageUrl);
+                }
                 cmd.Parameters.AddWithValue("Category_Id", blog.Category_Id);
                 cmd.Parameters.AddWithValue("Place", blog.Place);
 
@@ -239,7 +246,14 @@ namespace Mvc.Service
                 cmd.Parameters.AddWithValue("Title", blog.Title);
                 cmd.Parameters.AddWithValue("Short_Description", blog.Short_Description);
                 cmd.Parameters.AddWithValue("Description", blog.Description);
-                cmd.Parameters.AddWithValue("Img_Url", blog.ImageUrl);
+                if (String.IsNullOrEmpty(blog.ImageUrl))
+                {
+                    cmd.Parameters.AddWithValue("Img_Url", System.DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("Img_Url", blog.ImageUrl);
+                }
                 cmd.Parameters.AddWithValue("Category_Id", blog.Category_Id);
                 cmd.Parameters.AddWithValue("Place", blog.Place);
                 // parameters is boolean
@@ -252,7 +266,14 @@ namespace Mvc.Service
                 // parameters is date time
                 MySqlParameter paramPublicDate = new MySqlParameter();
                 paramPublicDate.ParameterName = "Public_Date";
-                paramPublicDate.Value = blog.Public_Date;
+                if(blog.Public_Date == null)
+                {
+                    paramPublicDate.Value = System.DBNull.Value;
+                }
+                else
+                {
+                    paramPublicDate.Value = blog.Public_Date;
+                }
                 paramPublicDate.DbType = System.Data.DbType.DateTime;
                 cmd.Parameters.Add(paramPublicDate);
 
