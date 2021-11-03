@@ -48,17 +48,17 @@ function deleteBlog(id) {
 }
 
 /*
- * Edit blog js 
+ * Edit,new blog js 
  */
-function editClear() {
+function blogClear() {
 
-    document.getElementById("inputEditTitleBlog").value = "";
-    document.getElementById("inputEditShortDescTitleBlog").value = "";
-    document.getElementById("inputEditDescTitleBlog").value = "";
+    document.getElementById("Title").value = "";
+    document.getElementById("Short_Description").value = "";
+    document.getElementById("Description").value = "";
 
     document.getElementById("inputEditFile").value = "";
 
-    var country = document.getElementById("inputEditCategory");
+    var country = document.getElementById("Category");
     country.options['0'].selected = true;
 
     $("#placeEditVietName").prop('checked', true);
@@ -72,29 +72,6 @@ function editClear() {
     document.getElementById("inputEditPublicDate").value = "";
 }
 
-/*
- *  News blog js
- */
-function newClear() {
-    document.getElementById("inputNewTitleBlog").value = "";
-    document.getElementById("inputNewShortDescTitleBlog").value = "";
-    document.getElementById("inputNewDescTitleBlog").value = "";
-
-    document.getElementById("inputNewFile").value = "";
-
-    var country = document.getElementById("inputNewCategory");
-    country.options['0'].selected = true;
-
-    $("#placeNewVietName").prop('checked', true);
-    $("#placeNewAsian").prop('checked', false);
-    $("#placeNewEuro").prop('checked', false);
-    $("#placeNewAmerica").prop('checked', false);
-
-    $("#radioNewPublicNo").checked = true;
-    $("#radioNewPublicYes").checked = false;
-
-    document.getElementById("inputEditPublicDate").value = "";
-}
 
 /* Search blog js */
 function searchBlog() {

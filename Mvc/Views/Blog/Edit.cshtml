@@ -51,26 +51,13 @@
                             <div class="col-md-12 mt-4 input-img-create-blog">
                                 <label for="inputEditFile" class="col-form-label">Hình ảnh</label>
                                 <input class="form-control-novalidate with-75" name="ImageUrl" id="inputEditFile" value="@Model.Blog.ImageUrl" type="file">
-                                
+
                             </div>
 
                             <div class="col-md-12 mt-4">
                                 <label for="inputEditCategory" class="col-form-label">Loại</label>
-                                <select id="inputNewCategory" class="form-control-novalidate with-25" name="Category_Id">
-                                    @{
-                                        foreach (CategoryModel category in Model.listCategory)
-                                        {
-                                            if (category.Id == Model.Blog.Category_Id)
-                                            {
-                                                <option selected value="@category.Id">@category.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@category.Id">@category.Name</option>
-                                            }
-                                        }
-                                    }
-                                </select>
+                                @Html.DropDownList("Category", new SelectList(Model.listCategory, "Id", "Name", Model.Blog.Category_Id), new { @class = "form-control-novalidate with-30" })
+
                             </div>
 
                             <div class="col-md-12 mt-4">
@@ -78,13 +65,12 @@
                                     <label class="col-form-label">Vị trí</label>
                                 </div>
                                 @{
-                                    foreach (var pl in Model.listPlace)
+                                    foreach (var place in Model.listPlace)
                                     {
                                         <div class="form-check">
-                                            @Html.CheckBox("placeEdit"+pl.Id, pl.Id == 1 ? true : false, new {@class= "form-check-input" })
-                                            <label class="form-check-label" for="placeEditVietName">
-                                                @Html.DisplayFor(name=>pl.Name)
-                                            </label>
+                                            @Html.CheckBox("Place" + place.Name, place.Id == 1 ? true : false, new { @class = "form-check-input" })
+
+                                            @Html.Label("Place" + place.Name, place.Name, new { @class = "form-check-label" })
                                         </div>
                                     }
                                 }
@@ -94,34 +80,12 @@
                                     <label class="col-form-label"> Public</label>
                                 </div>
                                 <div class="form-check">
-                                    @{
-                                        if (Model.Blog.Status)
-                                        {
-                                            <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes" checked>
-                                        }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="radio" name="Status" value="true" id="radioEidtPublicYes">
-                                        }
-                                    }
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Yes
-                                    </label>
+                                    @Html.RadioButton("Status" + Model.Blog.Status, Model.Blog.Status ? "Yes" : "No", new { @class = "form-check-input", Checked = Model.Blog.Status == true ? "checked" : "" })
+                                    @Html.Label("Status" + Model.Blog.Status, Model.Blog.Status == true ? "Yes" : "No", new { @class = "form-check-label" })
                                 </div>
                                 <div class="form-check">
-                                    @{
-                                        if (Model.Blog.Status)
-                                        {
-                                            <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo">
-                                        }
-                                        else
-                                        {
-                                            <input class="form-check-input" type="radio" name="Status" value="false" id="radioEidtPublicNo" checked>
-                                        }
-                                    }
-                                    <label class="form-check-label" for="radioEidtPublicNo">
-                                        No
-                                    </label>
+                                    @Html.RadioButton("Status" + !Model.Blog.Status, !Model.Blog.Status ? "Yes" : "No", new { @class = "form-check-input", Checked =!Model.Blog.Status == true ? "checked" : "" })
+                                    @Html.Label("Status" + !Model.Blog.Status, !Model.Blog.Status == true ? "Yes" : "No", new { @class = "form-check-label" })
                                 </div>
                             </div>
                             <div class="col-12 mt-4">
@@ -141,7 +105,7 @@
                         </div>
                         <div class="col-12 pt-3 text-center">
                             <button class="btn btn-success c" type="submit">Submit</button>
-                            <button class="btn btn-primary" type="button" onclick="editClear()"> Clear</button>
+                            <button class="btn btn-primary" type="button" onclick="blogClear()"> Clear</button>
                         </div>
                     }
                 }

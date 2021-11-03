@@ -11,12 +11,16 @@ namespace Mvc.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Description not null")]
+        [Required(ErrorMessage = "Title not null")]
         [DisplayName("Tiêu đề")]
         public String Title { get; set; }
-        [Required(ErrorMessage = "Description not null")]
+
+        [Required(ErrorMessage = "Short Description not null")]
+        [DisplayName("Mô tả ngắn")]
         public String Short_Description { get; set; }
+
         [Required(ErrorMessage = "Description not null")]
+        [DisplayName("Chi tiết")]
         public String Description { get; set; }
         public String ImageUrl { get; set; }
         public String Place { get; set; }

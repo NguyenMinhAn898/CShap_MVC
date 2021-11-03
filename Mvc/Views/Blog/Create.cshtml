@@ -1,4 +1,6 @@
-﻿@{
+﻿@model BlogDataModel
+
+@{
     ViewData["Title"] = "New Blog";
     var checkInsert = ViewBag.CheckInsert;
     var messageInser = ViewData["MessageInsert"];
@@ -10,12 +12,6 @@
     <div class="card px-1">
         <div class="card-header py-0">
             <h4>New Blogs</h4>
-            @{
-                if (checkInsert)
-                {
-                    <p class="text-danger">@messageInser</p>
-                }
-            }
         </div>
         <div class="card-body p-2 with-50">
             @using (Html.BeginForm("createBlog", "Blog", FormMethod.Post, new { @class = "needs-validation", novalidate = "" }))
@@ -23,24 +19,24 @@
                 <div class="row align-items-center ">
 
                     <div class="col-12 mt-3 has-validation">
-                        <label for="inputNewTitleBlog" class="col-form-label">Tiêu đề</label>
-                        <input type="text" id="inputNewTitleBlog" name="Title" class="form-control " placeholder="Title" aria-describedby="inputNewTitleBlog" required>
+                        @Html.LabelFor(title => Model.Blog.Title, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(title => Model.Blog.Title, new { @class = "form-control ", required = "", placeholder = "Title" })
                         <div class="invalid-feedback">
                             Title not null
                         </div>
                     </div>
 
                     <div class="col-12 mt-3 has-validation">
-                        <label for="inputNewShortDescTitleBlog" class="col-form-label">Mô tả ngắn</label>
-                        <input type="text" id="inputNewShortDescTitleBlog" name="Short_Description" placeholder="Short Description" class="form-control" required>
+                        @Html.LabelFor(sd => Model.Blog.Short_Description, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(sd => Model.Blog.Short_Description, new { @class = "form-control ", required = "", placeholder = "Short Description" })
                         <div class="invalid-feedback">
                             Short Description not null
                         </div>
                     </div>
 
                     <div class="col-12 mt-3">
-                        <label for="inputNewDescTitleBlog" class="col-form-label">Chi tiết</label>
-                        <textarea class="form-control" rows="7" id="inputNewDescTitleBlog" name="Description" required></textarea>
+                        @Html.LabelFor(d => Model.Blog.Description, new { @class = "col-form-label" })
+                        @Html.TextAreaFor(d => Model.Blog.Description, new { @class = "form-control", required = "", rows = "6" })
                         <div class="invalid-feedback">
                             Description not null
                         </div>
@@ -52,47 +48,25 @@
                     </div>
 
                     <div class="col-md-12 mt-3">
-                        <label for="inputNewCategory" class="col-form-label">Loại</label>
-                        <select id="inputNewCategory" class="form-control-novalidate with-30" name="Category_Id">
-                            @{
-                                <option selected value="0">Choose...</option>
-                                foreach (CategoryModel category in listCategory)
-                                {
-                                    <option value="@category.Id">@category.Name</option>
-                                }
-                            }
+                        <label for="Category" class="col-form-label">Loại</label>
+                        @Html.DropDownList("Category", new SelectList(Model.listCategory, "Id", "Name"), "Please select...", new { @class = "form-control-novalidate with-30" })
 
-                        </select>
                     </div>
 
                     <div class="col-md-12 mt-3">
                         <div class="col-md-12">
                             <label class="col-form-label">Vị trí</label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Việt Nam" name="Place" id="placeNewVietName" checked>
-                            <label class="form-check-label" for="placeNewVietName">
-                                Việt Nam
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Châu Á" name="Place" id="placeNewAsian">
-                            <label class="form-check-label" for="placeNewAsian">
-                                Châu Á
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Châu Âu" name="Place" id="placeNewEuro">
-                            <label class="form-check-label" for="placeNewEuro">
-                                Châu Âu
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Châu Mỹ" name="Place" id="placeNewAmerica">
-                            <label class="form-check-label" for="placeNewAmerica">
-                                Châu Mỹ
-                            </label>
-                        </div>
+                        @{
+                            foreach (var place in Model.listPlace)
+                            {
+                                <div class="form-check">
+                                    @Html.CheckBox("Place" + place.Name, place.Id == 1 ? true : false, new { @class = "form-check-input" })
+
+                                    @Html.Label("Place" + place.Name, place.Name,new {@class= "form-check-label" })
+                                </div>
+                            }
+                        }                        
                     </div>
                     <div class="col-md-12 mt-3">
                         <div>
@@ -119,7 +93,7 @@
 
                     <div class="col-12 pt-3 mt-3 text-center">
                         <button class="btn btn-success" type="submit">Submit</button>
-                        <button class="btn btn-primary" type="button" onclick="newClear()"> Clear</button>
+                        <button class="btn btn-primary" type="button" onclick="blogClear()"> Clear</button>
                     </div>
                 </div>
             }

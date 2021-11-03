@@ -18,6 +18,11 @@
     width:25%;
 }
 
+.field-validation-error {
+    font-size:12px;
+    color: red;
+}
+
 .form-control-novalidate {
     display: block;
     padding: .375rem .75rem;

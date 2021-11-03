@@ -49,27 +49,12 @@ namespace Mvc.Controllers
         /// <returns></returns>
         public IActionResult Create(BlogModel input)
         {
-            bool check = false;
-            ViewData["MessageInsert"] = "";
+            BlogDataModel data = new BlogDataModel();
+            data.Blog = new BlogModel();
+            data.listPlace = initPlace();
+            data.listCategory = initCategory();
 
-            if (!String.IsNullOrEmpty(input.Title))
-            {
-                check = true;
-                bool insertChecked = blogService.insertBlog(input);                
-
-                if (insertChecked)
-                {
-                    ViewData["MessageInsert"] = "Successfully added new blog!";
-                }
-                else
-                {
-                    ViewData["MessageInsert"] = "Add new blog fail !";
-                }
-            }
-            ViewBag.CheckInsert = check;
-            ViewBag.listCategory = categoryService.findAll();
-
-            return View();
+            return View(data);
         }
            
         /// <summary>
