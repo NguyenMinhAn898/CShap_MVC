@@ -79,10 +79,6 @@
                                 <div>
                                     <label class="col-form-label"> Public</label>
                                 </div>
-                                @*<div class="form-check">
-            @Html.RadioButton("Status" + Model.Blog.Status, Model.Blog.Status ? "Yes" : "No", new { @class = "form-check-input", Checked = Model.Blog.Status == true ? "checked" : "" })
-            @Html.Label("Status" + Model.Blog.Status, Model.Blog.Status == true ? "Yes" : "No", new { @class = "form-check-label" })
-        </div>*@
                                 <div class="form-check">
                                     @Html.RadioButtonFor(m => Model.Blog.Status, "true")
                                     @Html.Label("Status" + Model.Blog.Status, "Yes" , new { @class = "form-check-label" })
